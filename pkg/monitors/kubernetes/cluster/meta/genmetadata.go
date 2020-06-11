@@ -29,8 +29,10 @@ const (
 	KubernetesDaemonSetDesiredScheduled                    = "kubernetes.daemon_set.desired_scheduled"
 	KubernetesDaemonSetMisscheduled                        = "kubernetes.daemon_set.misscheduled"
 	KubernetesDaemonSetReady                               = "kubernetes.daemon_set.ready"
+	KubernetesDaemonSetUpdated                             = "kubernetes.daemon_set.updated"
 	KubernetesDeploymentAvailable                          = "kubernetes.deployment.available"
 	KubernetesDeploymentDesired                            = "kubernetes.deployment.desired"
+	KubernetesDeploymentUpdated                            = "kubernetes.deployment.updated"
 	KubernetesHpaSpecMaxReplicas                           = "kubernetes.hpa.spec.max_replicas"
 	KubernetesHpaSpecMinReplicas                           = "kubernetes.hpa.spec.min_replicas"
 	KubernetesHpaStatusConditionAbleToScale                = "kubernetes.hpa.status.condition.able_to_scale"
@@ -100,8 +102,10 @@ var MetricSet = map[string]monitors.MetricInfo{
 	KubernetesDaemonSetDesiredScheduled:                    {Type: datapoint.Gauge},
 	KubernetesDaemonSetMisscheduled:                        {Type: datapoint.Gauge},
 	KubernetesDaemonSetReady:                               {Type: datapoint.Gauge},
+	KubernetesDaemonSetUpdated:                             {Type: datapoint.Gauge},
 	KubernetesDeploymentAvailable:                          {Type: datapoint.Gauge},
 	KubernetesDeploymentDesired:                            {Type: datapoint.Gauge},
+	KubernetesDeploymentUpdated:                            {Type: datapoint.Gauge},
 	KubernetesHpaSpecMaxReplicas:                           {Type: datapoint.Gauge, Group: GroupHpa},
 	KubernetesHpaSpecMinReplicas:                           {Type: datapoint.Gauge, Group: GroupHpa},
 	KubernetesHpaStatusConditionAbleToScale:                {Type: datapoint.Gauge, Group: GroupHpa},
@@ -158,6 +162,8 @@ var MetricSet = map[string]monitors.MetricInfo{
 }
 
 var DefaultMetrics = map[string]bool{
+	KubernetesContainerCPULimit:                            true,
+	KubernetesContainerMemoryLimit:                         true,
 	KubernetesContainerReady:                               true,
 	KubernetesContainerRestartCount:                        true,
 	KubernetesDaemonSetCurrentScheduled:                    true,
@@ -228,7 +234,7 @@ var KubernetesClusterMonitorMetadata = monitors.Metadata{
 	MonitorType:     "kubernetes-cluster",
 	DefaultMetrics:  DefaultMetrics,
 	Metrics:         MetricSet,
-	SendUnknown:     false,
+	SendUnknown:     true,
 	Groups:          GroupSet,
 	GroupMetricsMap: GroupMetricsMap,
 	SendAll:         false,
@@ -238,7 +244,7 @@ var OpenshiftClusterMonitorMetadata = monitors.Metadata{
 	MonitorType:     "openshift-cluster",
 	DefaultMetrics:  DefaultMetrics,
 	Metrics:         MetricSet,
-	SendUnknown:     false,
+	SendUnknown:     true,
 	Groups:          GroupSet,
 	GroupMetricsMap: GroupMetricsMap,
 	SendAll:         false,

@@ -15382,7 +15382,7 @@
       "sendAll": false,
       "sendUnknown": false,
       "dimensions": null,
-      "doc": "Monitors a MySQL database server using collectd's [MySQL\nplugin](https://collectd.org/wiki/index.php/Plugin:MySQL). It supports\nMySQL versions 5.x or later.\n\nThis monitor connects to a MySQL instance and reports on the values\nreturned by a `SHOW STATUS` command. This includes the following:\n\n  - Number of commands processed\n  - Table and row operations (handlers)\n  - State of the query cache\n  - Status of MySQL threads\n  - Network traffic\n\n\u003c!--- SETUP ---\u003e\n### Note on localhost\nOn Unix, MySQL programs treat the host name `localhost` specially, in a way\nthat is likely different from what is expected compared to other\nnetwork-based programs. For connections to `localhost`, MySQL programs\nattempt to connect to the local server by using a Unix socket file. To ensure\nthat the client makes a TCP/IP connection to the local server specify a host\nname value of `127.0.0.1`, or the IP address or name of the local server.\n\n\u003c!--- SETUP ---\u003e\n### Databases\nYou have to specify each database you want to monitor individually under\nthe `databases` config option.  If you have a common authentication to all\ndatabases being monitored, you can specify that in the top-level\n`username`/`password` options, otherwise they can be specified at the\ndatabase level.\n\n\u003c!--- SETUP ---\u003e\n### InnoDB metrics\nIf you want to enable InnoDB metrics (`innodbStats` to `true`), be sure that\nyou granted to your user the `PROCESS` privilege.\n\n\u003c!--- SETUP ---\u003e\n### Example Config\n\nSample YAML configuration:\n\n```\nmonitors:\n - type: collectd/mysql\n   host: 127.0.0.1\n   port: 3306\n   databases:\n     - name: dbname\n     - name: securedb\n       username: admin\n       password: s3cr3t\n   username: dbuser\n   password: passwd\n```\n",
+      "doc": "Monitors a MySQL database server using collectd's [MySQL\nplugin](https://collectd.org/wiki/index.php/Plugin:MySQL). It supports\nMySQL versions 5.x or later.\n\nThis monitor connects to a MySQL instance and reports on the values\nreturned by a `SHOW STATUS` command. This includes the following:\n\n  - Number of commands processed\n  - Table and row operations (handlers)\n  - State of the query cache\n  - Status of MySQL threads\n  - Network traffic\n\n\u003c!--- SETUP ---\u003e\n### Note on localhost\nOn Unix, MySQL programs treat the host name `localhost` specially, in a way\nthat is likely different from what is expected compared to other\nnetwork-based programs. For connections to `localhost`, MySQL programs\nattempt to connect to the local server by using a Unix socket file. To ensure\nthat the client makes a TCP/IP connection to the local server specify a host\nname value of `127.0.0.1`, or the IP address or name of the local server.\n\n\u003c!--- SETUP ---\u003e\n### Databases\nYou have to specify each database you want to monitor individually under\nthe `databases` config option.  If you have a common authentication to all\ndatabases being monitored, you can specify that in the top-level\n`username`/`password` options, otherwise they can be specified at the\ndatabase level.\n\n\u003c!--- SETUP ---\u003e\n### InnoDB metrics\nIf you want to enable InnoDB metrics (`innodbStats` to `true`), be sure that\nyou granted to your user the `PROCESS` privilege.\n\n\u003c!--- SETUP ---\u003e\nIn order to enable wsrep statistics available in MySQL Galera/Percona XtraDB Cluster,\nset `wsrepStats` to `true`.\n\n\u003c!--- SETUP ---\u003e\n### Example Config\n\nSample YAML configuration:\n\n```\nmonitors:\n - type: collectd/mysql\n   host: 127.0.0.1\n   port: 3306\n   databases:\n     - name: dbname\n     - name: securedb\n       username: admin\n       password: s3cr3t\n   username: dbuser\n   password: passwd\n```\n",
       "groups": {
         "": {
           "description": "",
@@ -15595,7 +15595,29 @@
             "threads.cached",
             "threads.connected",
             "threads.running",
-            "total_threads.created"
+            "total_threads.created",
+            "wsrep_apply_oooe.operations",
+            "wsrep_apply_oool.operations",
+            "wsrep_apply_window.gauge",
+            "wsrep_causal_reads.operations",
+            "wsrep_cert_deps_distance.gauge",
+            "wsrep_cluster_size.gauge",
+            "wsrep_commit_oooe.operations",
+            "wsrep_commit_oool.operations",
+            "wsrep_commit_window.gauge",
+            "wsrep_flow_control_paused.operations",
+            "wsrep_flow_control_recv.operations",
+            "wsrep_flow_control_sent.operations",
+            "wsrep_local_bf_aborts.operations",
+            "wsrep_local_cert_failures.operations",
+            "wsrep_local_commits.operations",
+            "wsrep_local_recv_queue.queue_length",
+            "wsrep_local_replays.operations",
+            "wsrep_local_send_queue.queue_length",
+            "wsrep_received.operations",
+            "wsrep_received_bytes.total_bytes",
+            "wsrep_replicated.operations",
+            "wsrep_replicated_bytes.total_bytes"
           ]
         }
       },
@@ -16853,6 +16875,138 @@
           "description": "The total number of threads created by MySQL for client connections.  A MySQL thread corresponds to a single MySQL connection.",
           "group": null,
           "default": false
+        },
+        "wsrep_apply_oooe.operations": {
+          "type": "cumulative",
+          "description": "How often applier started write-set applying out-of-order (parallelization efficiency).",
+          "group": null,
+          "default": false
+        },
+        "wsrep_apply_oool.operations": {
+          "type": "cumulative",
+          "description": "How often write-set was so slow to apply that write-set with higher seqno’s were applied earlier.",
+          "group": null,
+          "default": false
+        },
+        "wsrep_apply_window.gauge": {
+          "type": "gauge",
+          "description": "Average distance between highest and lowest concurrently applied seqno.",
+          "group": null,
+          "default": false
+        },
+        "wsrep_causal_reads.operations": {
+          "type": "cumulative",
+          "description": "Shows the number of writesets processed.",
+          "group": null,
+          "default": false
+        },
+        "wsrep_cert_deps_distance.gauge": {
+          "type": "gauge",
+          "description": "Average distance between highest and lowest seqno value that can be possibly applied in parallel (potential degree of parallelization).",
+          "group": null,
+          "default": false
+        },
+        "wsrep_cluster_size.gauge": {
+          "type": "gauge",
+          "description": "Current number of members in the cluster.",
+          "group": null,
+          "default": false
+        },
+        "wsrep_commit_oooe.operations": {
+          "type": "cumulative",
+          "description": "How often a transaction was committed out of order.",
+          "group": null,
+          "default": false
+        },
+        "wsrep_commit_oool.operations": {
+          "type": "cumulative",
+          "description": "This variable currently has no meaning.",
+          "group": null,
+          "default": false
+        },
+        "wsrep_commit_window.gauge": {
+          "type": "gauge",
+          "description": "Average distance between highest and lowest concurrently committed seqno.",
+          "group": null,
+          "default": false
+        },
+        "wsrep_flow_control_paused.operations": {
+          "type": "cumulative",
+          "description": "The fraction of time since the last FLUSH STATUS command that replication was paused due to flow control.",
+          "group": null,
+          "default": false
+        },
+        "wsrep_flow_control_recv.operations": {
+          "type": "cumulative",
+          "description": "Returns the number of FC_PAUSE events the node has received, including those the node has sent.",
+          "group": null,
+          "default": false
+        },
+        "wsrep_flow_control_sent.operations": {
+          "type": "cumulative",
+          "description": "Returns the number of FC_PAUSE events the node has sent.",
+          "group": null,
+          "default": false
+        },
+        "wsrep_local_bf_aborts.operations": {
+          "type": "cumulative",
+          "description": "Total number of local transactions that were aborted by slave transactions while in execution.",
+          "group": null,
+          "default": false
+        },
+        "wsrep_local_cert_failures.operations": {
+          "type": "cumulative",
+          "description": "Total number of local transactions that failed certification test.",
+          "group": null,
+          "default": false
+        },
+        "wsrep_local_commits.operations": {
+          "type": "cumulative",
+          "description": "Total number of local transactions committed.",
+          "group": null,
+          "default": false
+        },
+        "wsrep_local_recv_queue.queue_length": {
+          "type": "gauge",
+          "description": "Current (instantaneous) length of the recv queue.",
+          "group": null,
+          "default": false
+        },
+        "wsrep_local_replays.operations": {
+          "type": "cumulative",
+          "description": "Total number of transaction replays due to asymmetric lock granularity.",
+          "group": null,
+          "default": false
+        },
+        "wsrep_local_send_queue.queue_length": {
+          "type": "gauge",
+          "description": "Current (instantaneous) length of the send queue.",
+          "group": null,
+          "default": false
+        },
+        "wsrep_received.operations": {
+          "type": "cumulative",
+          "description": "Total number of write-sets received from other nodes.",
+          "group": null,
+          "default": false
+        },
+        "wsrep_received_bytes.total_bytes": {
+          "type": "cumulative",
+          "description": "Total size of write-sets received from other nodes.",
+          "group": null,
+          "default": false
+        },
+        "wsrep_replicated.operations": {
+          "type": "cumulative",
+          "description": "Total number of write-sets replicated (sent to other nodes).",
+          "group": null,
+          "default": false
+        },
+        "wsrep_replicated_bytes.total_bytes": {
+          "type": "cumulative",
+          "description": "Total size of write-sets replicated.",
+          "group": null,
+          "default": false
         }
       },
       "properties": null,
@@ -16950,6 +17104,14 @@
           },
           {
             "yamlName": "innodbStats",
+            "doc": "",
+            "default": false,
+            "required": false,
+            "type": "bool",
+            "elementKind": ""
+          },
+          {
+            "yamlName": "wsrepStats",
             "doc": "",
             "default": false,
             "required": false,

@@ -221,6 +221,28 @@ const (
 	threadsConnected                   = "threads.connected"
 	threadsRunning                     = "threads.running"
 	totalThreadsCreated                = "total_threads.created"
+	wsrepApplyOooeOperations           = "wsrep_apply_oooe.operations"
+	wsrepApplyOoolOperations           = "wsrep_apply_oool.operations"
+	wsrepApplyWindowGauge              = "wsrep_apply_window.gauge"
+	wsrepCausalReadsOperations         = "wsrep_causal_reads.operations"
+	wsrepCertDepsDistanceGauge         = "wsrep_cert_deps_distance.gauge"
+	wsrepClusterSizeGauge              = "wsrep_cluster_size.gauge"
+	wsrepCommitOooeOperations          = "wsrep_commit_oooe.operations"
+	wsrepCommitOoolOperations          = "wsrep_commit_oool.operations"
+	wsrepCommitWindowGauge             = "wsrep_commit_window.gauge"
+	wsrepFlowControlPausedOperations   = "wsrep_flow_control_paused.operations"
+	wsrepFlowControlRecvOperations     = "wsrep_flow_control_recv.operations"
+	wsrepFlowControlSentOperations     = "wsrep_flow_control_sent.operations"
+	wsrepLocalBfAbortsOperations       = "wsrep_local_bf_aborts.operations"
+	wsrepLocalCertFailuresOperations   = "wsrep_local_cert_failures.operations"
+	wsrepLocalCommitsOperations        = "wsrep_local_commits.operations"
+	wsrepLocalRecvQueueQueueLength     = "wsrep_local_recv_queue.queue_length"
+	wsrepLocalReplaysOperations        = "wsrep_local_replays.operations"
+	wsrepLocalSendQueueQueueLength     = "wsrep_local_send_queue.queue_length"
+	wsrepReceivedOperations            = "wsrep_received.operations"
+	wsrepReceivedBytesTotalBytes       = "wsrep_received_bytes.total_bytes"
+	wsrepReplicatedOperations          = "wsrep_replicated.operations"
+	wsrepReplicatedBytesTotalBytes     = "wsrep_replicated_bytes.total_bytes"
 )
 
 var metricSet = map[string]monitors.MetricInfo{
@@ -433,6 +455,28 @@ var metricSet = map[string]monitors.MetricInfo{
 	threadsConnected:                   {Type: datapoint.Gauge},
 	threadsRunning:                     {Type: datapoint.Gauge},
 	totalThreadsCreated:                {Type: datapoint.Counter},
+	wsrepApplyOooeOperations:           {Type: datapoint.Counter},
+	wsrepApplyOoolOperations:           {Type: datapoint.Counter},
+	wsrepApplyWindowGauge:              {Type: datapoint.Gauge},
+	wsrepCausalReadsOperations:         {Type: datapoint.Counter},
+	wsrepCertDepsDistanceGauge:         {Type: datapoint.Gauge},
+	wsrepClusterSizeGauge:              {Type: datapoint.Gauge},
+	wsrepCommitOooeOperations:          {Type: datapoint.Counter},
+	wsrepCommitOoolOperations:          {Type: datapoint.Counter},
+	wsrepCommitWindowGauge:             {Type: datapoint.Gauge},
+	wsrepFlowControlPausedOperations:   {Type: datapoint.Counter},
+	wsrepFlowControlRecvOperations:     {Type: datapoint.Counter},
+	wsrepFlowControlSentOperations:     {Type: datapoint.Counter},
+	wsrepLocalBfAbortsOperations:       {Type: datapoint.Counter},
+	wsrepLocalCertFailuresOperations:   {Type: datapoint.Counter},
+	wsrepLocalCommitsOperations:        {Type: datapoint.Counter},
+	wsrepLocalRecvQueueQueueLength:     {Type: datapoint.Gauge},
+	wsrepLocalReplaysOperations:        {Type: datapoint.Counter},
+	wsrepLocalSendQueueQueueLength:     {Type: datapoint.Gauge},
+	wsrepReceivedOperations:            {Type: datapoint.Counter},
+	wsrepReceivedBytesTotalBytes:       {Type: datapoint.Counter},
+	wsrepReplicatedOperations:          {Type: datapoint.Counter},
+	wsrepReplicatedBytesTotalBytes:     {Type: datapoint.Counter},
 }
 
 var defaultMetrics = map[string]bool{

@@ -37,6 +37,10 @@ monitors:
     you granted to your user the `PROCESS` privilege.
 
     <!--- SETUP --->
+    In order to enable wsrep statistics available in MySQL Galera/Percona XtraDB Cluster,
+    set `wsrepStats` to `true`.
+
+    <!--- SETUP --->
     ### Example Config
 
     Sample YAML configuration:
@@ -902,5 +906,93 @@ monitors:
       description: The number of rows updated in InnoDB tables.
       default: false
       type: cumulative
+    wsrep_apply_oooe.operations:
+      description: How often applier started write-set applying out-of-order (parallelization efficiency).
+      default: false
+      type: cumulative
+    wsrep_apply_oool.operations:
+      description: How often write-set was so slow to apply that write-set with higher seqno’s were applied earlier.
+      default: false
+      type: cumulative
+    wsrep_causal_reads.operations:
+      description: Shows the number of writesets processed.
+      default: false
+      type: cumulative
+    wsrep_commit_oooe.operations:
+      description: How often a transaction was committed out of order.
+      default: false
+      type: cumulative
+    wsrep_commit_oool.operations:
+      description: This variable currently has no meaning.
+      default: false
+      type: cumulative
+    wsrep_flow_control_recv.operations:
+      description: Returns the number of FC_PAUSE events the node has received, including those the node has sent.
+      default: false
+      type: cumulative
+    wsrep_flow_control_sent.operations:
+      description: Returns the number of FC_PAUSE events the node has sent.
+      default: false
+      type: cumulative
+    wsrep_flow_control_paused.operations:
+      description: The fraction of time since the last FLUSH STATUS command that replication was paused due to flow control.
+      default: false
+      type: cumulative
+    wsrep_local_bf_aborts.operations:
+      description: Total number of local transactions that were aborted by slave transactions while in execution.
+      default: false
+      type: cumulative
+    wsrep_local_cert_failures.operations:
+      description: Total number of local transactions that failed certification test.
+      default: false
+      type: cumulative
+    wsrep_local_commits.operations:
+      description: Total number of local transactions committed.
+      default: false
+      type: cumulative
+    wsrep_local_replays.operations:
+      description: Total number of transaction replays due to asymmetric lock granularity.
+      default: false
+      type: cumulative
+    wsrep_received.operations:
+      description: Total number of write-sets received from other nodes.
+      default: false
+      type: cumulative
+    wsrep_replicated.operations:
+      description: Total number of write-sets replicated (sent to other nodes).
+      default: false
+      type: cumulative
+    wsrep_received_bytes.total_bytes:
+      description: Total size of write-sets received from other nodes.
+      default: false
+      type: cumulative
+    wsrep_replicated_bytes.total_bytes:
+      description: Total size of write-sets replicated.
+      default: false
+      type: cumulative
+    wsrep_apply_window.gauge:
+      description: Average distance between highest and lowest concurrently applied seqno.
+      default: false
+      type: gauge
+    wsrep_commit_window.gauge:
+      description: Average distance between highest and lowest concurrently committed seqno.
+      default: false
+      type: gauge
+    wsrep_cluster_size.gauge:
+      description: Current number of members in the cluster.
+      default: false
+      type: gauge
+    wsrep_cert_deps_distance.gauge:
+      description: Average distance between highest and lowest seqno value that can be possibly applied in parallel (potential degree of parallelization).
+      default: false
+      type: gauge
+    wsrep_local_recv_queue.queue_length:
+      description: Current (instantaneous) length of the recv queue.
+      default: false
+      type: gauge
+    wsrep_local_send_queue.queue_length:
+      description: Current (instantaneous) length of the send queue.
+      default: false
+      type: gauge
   monitorType: collectd/mysql
   properties:

@@ -46,6 +46,10 @@ If you want to enable InnoDB metrics (`innodbStats` to `true`), be sure that
 you granted to your user the `PROCESS` privilege.
 
 <!--- SETUP --->
+In order to enable wsrep statistics available in MySQL Galera/Percona XtraDB Cluster,
+set `wsrepStats` to `true`.
+
+<!--- SETUP --->
 ### Example Config
 
 Sample YAML configuration:
@@ -90,6 +94,7 @@ Configuration](../monitor-config.md#common-configuration).**
 | `password` | no | `string` |  |
 | `reportHost` | no | `bool` | A SignalFx extension to the plugin that allows us to disable the normal behavior of the MySQL collectd plugin where the `host` dimension is set to the hostname of the MySQL database server.  When `false` (the recommended and default setting), the globally configured `hostname` config is used instead. (**default:** `false`) |
 | `innodbStats` | no | `bool` |  (**default:** `false`) |
+| `wsrepStats` | no | `bool` |  (**default:** `false`) |
 
 
 The **nested** `databases` config object has the following fields:
@@ -318,6 +323,28 @@ Metrics that are categorized as
  - ***`threads.connected`*** (*gauge*)<br>    The number of currently open MySQL connections.  A MySQL thread corresponds to a single MySQL connection.
  - `threads.running` (*gauge*)<br>    The number of MySQL threads that are processing a query.  A MySQL thread corresponds to a single MySQL connection.
  - `total_threads.created` (*cumulative*)<br>    The total number of threads created by MySQL for client connections.  A MySQL thread corresponds to a single MySQL connection.
+ - `wsrep_apply_oooe.operations` (*cumulative*)<br>    How often applier started write-set applying out-of-order (parallelization efficiency).
+ - `wsrep_apply_oool.operations` (*cumulative*)<br>    How often write-set was so slow to apply that write-set with higher seqno’s were applied earlier.
+ - `wsrep_apply_window.gauge` (*gauge*)<br>    Average distance between highest and lowest concurrently applied seqno.
+ - `wsrep_causal_reads.operations` (*cumulative*)<br>    Shows the number of writesets processed.
+ - `wsrep_cert_deps_distance.gauge` (*gauge*)<br>    Average distance between highest and lowest seqno value that can be possibly applied in parallel (potential degree of parallelization).
+ - `wsrep_cluster_size.gauge` (*gauge*)<br>    Current number of members in the cluster.
+ - `wsrep_commit_oooe.operations` (*cumulative*)<br>    How often a transaction was committed out of order.
+ - `wsrep_commit_oool.operations` (*cumulative*)<br>    This variable currently has no meaning.
+ - `wsrep_commit_window.gauge` (*gauge*)<br>    Average distance between highest and lowest concurrently committed seqno.
+ - `wsrep_flow_control_paused.operations` (*cumulative*)<br>    The fraction of time since the last FLUSH STATUS command that replication was paused due to flow control.
+ - `wsrep_flow_control_recv.operations` (*cumulative*)<br>    Returns the number of FC_PAUSE events the node has received, including those the node has sent.
+ - `wsrep_flow_control_sent.operations` (*cumulative*)<br>    Returns the number of FC_PAUSE events the node has sent.
+ - `wsrep_local_bf_aborts.operations` (*cumulative*)<br>    Total number of local transactions that were aborted by slave transactions while in execution.
+ - `wsrep_local_cert_failures.operations` (*cumulative*)<br>    Total number of local transactions that failed certification test.
+ - `wsrep_local_commits.operations` (*cumulative*)<br>    Total number of local transactions committed.
+ - `wsrep_local_recv_queue.queue_length` (*gauge*)<br>    Current (instantaneous) length of the recv queue.
+ - `wsrep_local_replays.operations` (*cumulative*)<br>    Total number of transaction replays due to asymmetric lock granularity.
+ - `wsrep_local_send_queue.queue_length` (*gauge*)<br>    Current (instantaneous) length of the send queue.
+ - `wsrep_received.operations` (*cumulative*)<br>    Total number of write-sets received from other nodes.
+ - `wsrep_received_bytes.total_bytes` (*cumulative*)<br>    Total size of write-sets received from other nodes.
+ - `wsrep_replicated.operations` (*cumulative*)<br>    Total number of write-sets replicated (sent to other nodes).
+ - `wsrep_replicated_bytes.total_bytes` (*cumulative*)<br>    Total size of write-sets replicated.
 
 ### Non-default metrics (version 4.7.0+)
 
